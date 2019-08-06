@@ -33,25 +33,16 @@ var extend = H.extend, pick = H.pick, isFunction = function (x) {
  *         Map from parent id to children index in data
  */
 var getListOfParents = function (data, ids) {
-    var listOfParents = data.reduce(function (prev, curr) {
-        var parent = pick(curr.parent, '');
-        if (prev[parent] === undefined) {
-            prev[parent] = [];
+    return data.reduce(function (listOfParents, point) {
+        var parent = (point.parent && ids.indexOf(point.parent) > -1 ?
+            point.parent :
+            '');
+        if (listOfParents[parent] === undefined) {
+            listOfParents[parent] = [];
         }
-        prev[parent].push(curr);
-        return prev;
-    }, {}), parents = Object.keys(listOfParents);
-    // If parent does not exist, hoist parent to root of tree.
-    parents.forEach(function (parent, list) {
-        var children = listOfParents[parent];
-        if ((parent !== '') && (ids.indexOf(parent) === -1)) {
-            children.forEach(function (child) {
-                list[''].push(child);
-            });
-            delete list[parent];
-        }
-    });
-    return listOfParents;
+        listOfParents[parent].push(point);
+        return listOfParents;
+    }, {});
 };
 var getNode = function (id, parent, level, data, mapOfIdToChildren, options) {
     var descendants = 0, height = 0, after = options && options.after, before = options && options.before, node = {

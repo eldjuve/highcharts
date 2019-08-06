@@ -95,39 +95,30 @@ var getListOfParents = function (
     data: Array<Highcharts.TreePointOptionsObject>,
     ids: Array<string>
 ): Highcharts.Dictionary<Array<Highcharts.TreePointOptionsObject>> {
-    var listOfParents = data.reduce(function (
-            prev: (
+    return data.reduce(
+        function (
+            listOfParents: (
                 Highcharts.Dictionary<Array<Highcharts.TreePointOptionsObject>>
             ),
-            curr: Highcharts.TreePointOptionsObject
+            point: Highcharts.TreePointOptionsObject
         ): Highcharts.Dictionary<Array<Highcharts.TreePointOptionsObject>> {
-            var parent = pick(curr.parent, '');
+            const parent = (
+                point.parent && ids.indexOf(point.parent) > -1 ?
+                    point.parent :
+                    ''
+            );
 
-            if (prev[parent] === undefined) {
-                prev[parent] = [];
+            if (listOfParents[parent] === undefined) {
+                listOfParents[parent] = [];
             }
-            prev[parent].push(curr);
-            return prev;
-        }, {} as (
-            Highcharts.Dictionary<Array<Highcharts.TreePointOptionsObject>>
-        )),
-        parents = Object.keys(listOfParents);
+            listOfParents[parent].push(point);
 
-    // If parent does not exist, hoist parent to root of tree.
-    parents.forEach(function (parent: string, list: number): void {
-        var children = listOfParents[parent];
-
-        if ((parent !== '') && (ids.indexOf(parent) === -1)) {
-            children.forEach(function (
-                child: Highcharts.TreePointOptionsObject
-            ): void {
-                (list as any)[''].push(child);
-            });
-            delete (list as any)[parent];
-        }
-    });
-    return listOfParents;
+            return listOfParents;
+        },
+        {} as Highcharts.Dictionary<Array<Highcharts.TreePointOptionsObject>>
+    );
 };
+
 var getNode = function (
     id: string,
     parent: (string|null),

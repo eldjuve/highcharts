@@ -3235,7 +3235,8 @@ null,
             if (insideOnly && !chart.isInsidePlot(point.plotX, point.plotY, chart.inverted)) {
                 return false;
             }
-            return allowNull || !point.isNull;
+            return point.visible !== false &&
+                (allowNull || !point.isNull);
         });
     },
     /**
@@ -3414,7 +3415,7 @@ null,
      * @function Highcharts.Series#drawPoints
      */
     drawPoints: function () {
-        var series = this, points = series.points, chart = series.chart, i, point, symbol, graphic, verb, options = series.options, seriesMarkerOptions = options.marker, pointMarkerOptions, hasPointMarker, enabled, isInside, markerGroup = (series[series.specialGroup] ||
+        var series = this, points = series.points, chart = series.chart, i, point, symbol, graphic, verb, options = series.options, seriesMarkerOptions = options.marker, pointMarkerOptions, hasPointMarker, markerGroup = (series[series.specialGroup] ||
             series.markerGroup), xAxis = series.xAxis, markerAttribs, globallyEnabled = pick(seriesMarkerOptions.enabled, !xAxis || xAxis.isRadial ? true : null, 
         // Use larger or equal as radius is null in bubbles (#6321)
         series.closestPointRangePx >= (seriesMarkerOptions.enabledThreshold *
@@ -3427,14 +3428,14 @@ null,
                 verb = graphic ? 'animate' : 'attr';
                 pointMarkerOptions = point.marker || {};
                 hasPointMarker = !!point.marker;
-                enabled = (globallyEnabled &&
-                    pointMarkerOptions.enabled === undefined) || pointMarkerOptions.enabled;
-                isInside = point.isInside !== false;
+                var shouldDrawMarker = ((globallyEnabled &&
+                    pointMarkerOptions.enabled === undefined) || pointMarkerOptions.enabled) && !point.isNull && point.visible !== false;
                 // only draw the point if y is defined
-                if (enabled && !point.isNull) {
+                if (shouldDrawMarker) {
                     // Shortcuts
                     symbol = pick(pointMarkerOptions.symbol, series.symbol);
                     markerAttribs = series.markerAttribs(point, (point.selected && 'select'));
+                    var isInside = point.isInside !== false;
                     if (graphic) { // update
                         // Since the marker group isn't clipped, each
                         // individual marker must be toggled
@@ -3665,9 +3666,7 @@ null,
             step = 4 - step;
         }
         // Remove invalid points, especially in spline (#5015)
-        if (options.connectNulls && !nullsAsZeroes && !connectCliffs) {
-            points = this.getValidPoints(points);
-        }
+        points = this.getValidPoints(points, false, !(options.connectNulls && !nullsAsZeroes && !connectCliffs));
         // Build the line
         points.forEach(function (point, i) {
             var plotX = point.plotX, plotY = point.plotY, lastPoint = points[i - 1], 

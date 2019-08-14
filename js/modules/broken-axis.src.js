@@ -10,7 +10,7 @@
 'use strict';
 import H from '../parts/Globals.js';
 import U from '../parts/Utilities.js';
-var isArray = U.isArray, isNumber = U.isNumber;
+var isArray = U.isArray;
 import '../parts/Axis.js';
 import '../parts/Series.js';
 var addEvent = H.addEvent, pick = H.pick, extend = H.extend, find = H.find, fireEvent = H.fireEvent, Axis = H.Axis, Series = H.Series;
@@ -286,9 +286,11 @@ addEvent(Series, 'afterGeneratePoints', function () {
             var isPointInBreak = (!nullGap &&
                 (xAxis.isInAnyBreak(point.x, true) ||
                     yAxis.isInAnyBreak(point.y, true)));
-            // Set point.isNull if in any break.
-            // If not in break, reset isNull to original value.
-            point.isNull = isPointInBreak || pick(point.isValid && !point.isValid(), point.x === null || !isNumber(point.y));
+            // Set point.visible if in any break.
+            // If not in break, reset visible to original value.
+            point.visible = isPointInBreak ?
+                false :
+                point.options.visible !== false;
         }
     }
 });

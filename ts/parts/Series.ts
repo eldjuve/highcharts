@@ -4377,7 +4377,8 @@ H.Series = H.seriesType<Highcharts.SeriesOptions>(
                     )) {
                         return false;
                     }
-                    return allowNull || !point.isNull;
+                    return point.visible !== false &&
+                        (allowNull || !point.isNull);
                 }
             );
         },
@@ -4622,8 +4623,6 @@ H.Series = H.seriesType<Highcharts.SeriesOptions>(
                 seriesMarkerOptions = options.marker,
                 pointMarkerOptions,
                 hasPointMarker,
-                enabled,
-                isInside,
                 markerGroup = (
                     (series as any)[series.specialGroup as any] ||
                     series.markerGroup
@@ -4650,15 +4649,15 @@ H.Series = H.seriesType<Highcharts.SeriesOptions>(
                     verb = graphic ? 'animate' : 'attr';
                     pointMarkerOptions = point.marker || {};
                     hasPointMarker = !!point.marker;
-                    enabled = (
-                        globallyEnabled &&
-                        pointMarkerOptions.enabled === undefined
-                    ) || pointMarkerOptions.enabled;
-                    isInside = point.isInside !== false;
+                    const shouldDrawMarker = (
+                        (
+                            globallyEnabled &&
+                            pointMarkerOptions.enabled === undefined
+                        ) || pointMarkerOptions.enabled
+                    ) && !point.isNull && point.visible !== false;
 
                     // only draw the point if y is defined
-                    if (enabled && !point.isNull) {
-
+                    if (shouldDrawMarker) {
                         // Shortcuts
                         symbol = pick(pointMarkerOptions.symbol, series.symbol);
 
@@ -4667,6 +4666,7 @@ H.Series = H.seriesType<Highcharts.SeriesOptions>(
                             (point.selected && 'select') as any
                         );
 
+                        const isInside = point.isInside !== false;
                         if (graphic) { // update
                             // Since the marker group isn't clipped, each
                             // individual marker must be toggled
@@ -5038,9 +5038,11 @@ H.Series = H.seriesType<Highcharts.SeriesOptions>(
             }
 
             // Remove invalid points, especially in spline (#5015)
-            if (options.connectNulls && !nullsAsZeroes && !connectCliffs) {
-                points = this.getValidPoints(points);
-            }
+            points = this.getValidPoints(
+                points,
+                false,
+                !(options.connectNulls && !nullsAsZeroes && !connectCliffs)
+            );
 
             // Build the line
             points.forEach(function (point, i: number): void {

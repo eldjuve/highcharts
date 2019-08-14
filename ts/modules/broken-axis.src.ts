@@ -63,8 +63,7 @@ declare global {
 
 import U from '../parts/Utilities.js';
 const {
-    isArray,
-    isNumber
+    isArray
 } = U;
 
 import '../parts/Axis.js';
@@ -474,12 +473,11 @@ addEvent(Series, 'afterGeneratePoints', function (): void {
                     yAxis.isInAnyBreak(point.y, true)
                 )
             );
-            // Set point.isNull if in any break.
-            // If not in break, reset isNull to original value.
-            point.isNull = isPointInBreak || pick(
-                point.isValid && !point.isValid(),
-                point.x === null || !isNumber(point.y)
-            );
+            // Set point.visible if in any break.
+            // If not in break, reset visible to original value.
+            point.visible = isPointInBreak ?
+                false :
+                (point.options as any).visible !== false;
         }
     }
 });

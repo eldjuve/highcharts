@@ -647,6 +647,7 @@ import U from './Utilities.js';
 const {
     arrayMax,
     arrayMin,
+    correctFloat,
     defined,
     erase,
     extend,
@@ -666,7 +667,6 @@ import './SvgRenderer.js';
 
 var addEvent = H.addEvent,
     animObject = H.animObject,
-    correctFloat = H.correctFloat,
     defaultOptions = H.defaultOptions,
     defaultPlotOptions = H.defaultPlotOptions,
     fireEvent = H.fireEvent,

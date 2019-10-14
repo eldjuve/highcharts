@@ -9,13 +9,13 @@
 import H from '../parts/Globals.js';
 
 import U from '../parts/Utilities.js';
-var isArray = U.isArray,
+var correctFloat = U.correctFloat,
+    isArray = U.isArray,
     objectEach = U.objectEach;
 
 var ATR = H.seriesTypes.atr,
     SMA = H.seriesTypes.sma,
-    merge = H.merge,
-    correctFloat = H.correctFloat;
+    merge = H.merge;
 
 // Utils:
 function createPointObj(mainSeries, index, close) {

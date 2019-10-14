@@ -188,6 +188,7 @@ declare global {
 
 import U from './Utilities.js';
 const {
+    correctFloat,
     defined,
     destroyObjectProperties,
     erase,
@@ -1285,7 +1286,7 @@ Navigator.prototype = {
         // Are we below the minRange? (#2618, #6191)
         newMin = xAxis.toValue(pxMin as any, true);
         newMax = xAxis.toValue(pxMax as any, true);
-        currentRange = Math.abs(H.correctFloat(newMax - newMin));
+        currentRange = Math.abs(correctFloat(newMax - newMin));
         if (currentRange < (minRange as any)) {
             if (this.grabbedLeft) {
                 pxMin = xAxis.toPixels(newMax - (minRange as any), true);

@@ -105,6 +105,7 @@ import U from '../parts/Utilities.js';
 const {
     arrayMax,
     arrayMin,
+    correctFloat,
     isNumber,
     objectEach,
     pick
@@ -114,8 +115,7 @@ import '../parts/Options.js';
 import '../parts/Series.js';
 import '../parts/Point.js';
 
-var correctFloat = H.correctFloat,
-    addEvent = H.addEvent,
+var addEvent = H.addEvent,
     Axis = H.Axis,
     Chart = H.Chart,
     Point = H.Point,

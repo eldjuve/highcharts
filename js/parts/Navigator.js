@@ -10,7 +10,7 @@
 'use strict';
 import H from './Globals.js';
 import U from './Utilities.js';
-var defined = U.defined, destroyObjectProperties = U.destroyObjectProperties, erase = U.erase, extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, pick = U.pick, splat = U.splat;
+var correctFloat = U.correctFloat, defined = U.defined, destroyObjectProperties = U.destroyObjectProperties, erase = U.erase, extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, pick = U.pick, splat = U.splat;
 import './Color.js';
 import './Axis.js';
 import './Chart.js';
@@ -872,7 +872,7 @@ Navigator.prototype = {
         // Are we below the minRange? (#2618, #6191)
         newMin = xAxis.toValue(pxMin, true);
         newMax = xAxis.toValue(pxMax, true);
-        currentRange = Math.abs(H.correctFloat(newMax - newMin));
+        currentRange = Math.abs(correctFloat(newMax - newMin));
         if (currentRange < minRange) {
             if (this.grabbedLeft) {
                 pxMin = xAxis.toPixels(newMax - minRange, true);

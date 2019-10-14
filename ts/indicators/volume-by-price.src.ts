@@ -122,10 +122,13 @@ declare global {
 }
 
 import U from '../parts/Utilities.js';
-var arrayMax = U.arrayMax,
-    arrayMin = U.arrayMin,
-    extend = U.extend,
-    isArray = U.isArray;
+const {
+    arrayMax,
+    arrayMin,
+    correctFloat,
+    extend,
+    isArray
+} = U;
 
 /* eslint-disable require-jsdoc */
 
@@ -161,7 +164,6 @@ function arrayExtremesOHLC(
 var abs = Math.abs,
     noop = H.noop,
     addEvent = H.addEvent,
-    correctFloat = H.correctFloat,
     seriesType = H.seriesType,
     columnPrototype = H.seriesTypes.column.prototype;
 

@@ -9,13 +9,13 @@
 import H from '../parts/Globals.js';
 
 import U from '../parts/Utilities.js';
-var isArray = U.isArray;
+var correctFloat = U.correctFloat,
+    isArray = U.isArray;
 
 import requiredIndicatorMixin from '../mixins/indicator-required.js';
 
 var EMAindicator = H.seriesTypes.ema,
-    requiredIndicator = requiredIndicatorMixin,
-    correctFloat = H.correctFloat;
+    requiredIndicator = requiredIndicatorMixin;
 
 /**
  * The TEMA series type.

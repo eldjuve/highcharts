@@ -653,6 +653,7 @@ const {
     isArray,
     isNumber,
     isString,
+    numberFormat,
     objectEach,
     pick,
     splat,
@@ -2168,7 +2169,7 @@ H.Series = H.seriesType<Highcharts.LineSeries>(
             formatter: function (
                 this: Highcharts.DataLabelsFormatterContextObject
             ): string {
-                return this.y === null ? '' : H.numberFormat(this.y, -1);
+                return this.y === null ? '' : numberFormat(this.y, -1);
             },
             /** @internal */
             padding: 5,

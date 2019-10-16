@@ -15,6 +15,7 @@ import H from '../../../parts/Globals.js';
 import U from '../../../parts/Utilities.js';
 var extend = U.extend,
     isNumber = U.isNumber,
+    originalNumberFormat = U.numberFormat,
     pick = U.pick;
 
 import AccessibilityComponent from '../AccessibilityComponent.js';
@@ -1232,7 +1233,7 @@ extend(SeriesComponent.prototype, /** @lends Highcharts.SeriesComponent */ {
             numberFormat = function (value) {
                 if (isNumber(value)) {
                     var lang = H.defaultOptions.lang;
-                    return H.numberFormat(
+                    return originalNumberFormat(
                         value,
                         a11yOptions.pointValueDecimals ||
                             tooltipOptions.valueDecimals || -1,

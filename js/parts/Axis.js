@@ -205,7 +205,7 @@ import H from './Globals.js';
  * @return {string}
  */
 import U from './Utilities.js';
-var arrayMax = U.arrayMax, arrayMin = U.arrayMin, defined = U.defined, destroyObjectProperties = U.destroyObjectProperties, extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, isString = U.isString, objectEach = U.objectEach, pick = U.pick, splat = U.splat, syncTimeout = U.syncTimeout;
+var arrayMax = U.arrayMax, arrayMin = U.arrayMin, defined = U.defined, destroyObjectProperties = U.destroyObjectProperties, extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, isString = U.isString, numberFormat = U.numberFormat, objectEach = U.objectEach, pick = U.pick, splat = U.splat, syncTimeout = U.syncTimeout;
 import './Color.js';
 import './Options.js';
 import './Tick.js';
@@ -2906,7 +2906,7 @@ extend(Axis.prototype, /** @lends Highcharts.Axis.prototype */ {
              */
             formatter: function () {
                 /* eslint-enable valid-jsdoc */
-                return H.numberFormat(this.total, -1);
+                return numberFormat(this.total, -1);
             },
             /**
              * CSS styles for the label.
@@ -3269,16 +3269,16 @@ extend(Axis.prototype, /** @lends Highcharts.Axis.prototype */ {
                     (value * 10) % multi === 0 &&
                     numericSymbols[i] !== null &&
                     value !== 0) { // #5480
-                    ret = H.numberFormat(value / multi, -1) + numericSymbols[i];
+                    ret = numberFormat(value / multi, -1) + numericSymbols[i];
                 }
             }
         }
         if (ret === undefined) {
             if (Math.abs(value) >= 10000) { // add thousands separators
-                ret = H.numberFormat(value, -1);
+                ret = numberFormat(value, -1);
             }
             else { // small numbers
-                ret = H.numberFormat(value, -1, undefined, ''); // #2466
+                ret = numberFormat(value, -1, undefined, ''); // #2466
             }
         }
         return ret;

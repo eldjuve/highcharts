@@ -15,7 +15,7 @@ import H from '../parts/Globals.js';
  * @typedef {"linear"|"logarithmic"} Highcharts.ColorAxisTypeValue
  */
 import U from '../parts/Utilities.js';
-var erase = U.erase, extend = U.extend, isNumber = U.isNumber, pick = U.pick, splat = U.splat;
+var erase = U.erase, extend = U.extend, isNumber = U.isNumber, numberFormat = U.numberFormat, pick = U.pick, splat = U.splat;
 import '../parts/Axis.js';
 import '../parts/Chart.js';
 import '../parts/Color.js';
@@ -980,14 +980,14 @@ extend(ColorAxis.prototype, {
                     name = '> ';
                 }
                 if (from !== undefined) {
-                    name += H.numberFormat(from, valueDecimals) +
+                    name += numberFormat(from, valueDecimals) +
                         valueSuffix;
                 }
                 if (from !== undefined && to !== undefined) {
                     name += ' - ';
                 }
                 if (to !== undefined) {
-                    name += H.numberFormat(to, valueDecimals) + valueSuffix;
+                    name += numberFormat(to, valueDecimals) + valueSuffix;
                 }
                 // Add a mock object to the legend items
                 legendItems.push(extend({

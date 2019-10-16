@@ -140,6 +140,7 @@ const {
     erase,
     extend,
     isNumber,
+    numberFormat,
     pick,
     splat
 } = U;
@@ -1394,14 +1395,14 @@ extend(ColorAxis.prototype, {
                     name = '> ';
                 }
                 if (from !== undefined) {
-                    name += H.numberFormat(from, valueDecimals) +
+                    name += numberFormat(from, valueDecimals) +
                         valueSuffix;
                 }
                 if (from !== undefined && to !== undefined) {
                     name += ' - ';
                 }
                 if (to !== undefined) {
-                    name += H.numberFormat(to, valueDecimals) + valueSuffix;
+                    name += numberFormat(to, valueDecimals) + valueSuffix;
                 }
                 // Add a mock object to the legend items
                 legendItems.push(extend(

@@ -1910,7 +1910,7 @@ H.formatSingle = function (
         decimals = format.match(decRegex) as any;
         decimals = decimals ? (decimals as any)[1] : -1;
         if (val !== null) {
-            val = H.numberFormat(
+            val = numberFormat(
                 val,
                 decimals,
                 (lang as any).decimalPoint,
@@ -2376,7 +2376,7 @@ H.timeUnits = {
  * @return {string}
  *         The formatted number.
  */
-H.numberFormat = function (
+function numberFormat(
     number: number,
     decimals: number,
     decimalPoint?: string,
@@ -2463,7 +2463,7 @@ H.numberFormat = function (
     }
 
     return ret;
-};
+}
 
 /**
  * Easing definition
@@ -3376,6 +3376,7 @@ const utils = {
     isNumber,
     isObject,
     isString,
+    numberFormat,
     objectEach,
     pick,
     pInt,
